@@ -1,0 +1,1017 @@
+ <!DOCTYPE html> 
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMPUS EQUIPMENT & LAB DESK</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            500: '#334e68',
+                            600: '#243b53',
+                            700: '#102a43',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(100, 116, 139, 0.3);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(100, 116, 139, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- TOP HEADER -->
+    <header class="bg-slate-800 dark:bg-slate-950 text-white shadow-md sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 gap-4">
+                
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-3 shrink-0">
+                    <div class="bg-blue-600 text-white p-2.5 rounded-lg flex items-center justify-center shadow-inner">
+                        <i class="fa-solid fa-book-open text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight tracking-tight sm:text-xl">CAMPUS EQUIPMENT & LAB DESK</h1>
+                        <p class="text-xs text-slate-300 font-medium hidden sm:block">Grade 12 ICT Capstone Project • Live Desk</p>
+                    </div>
+                </div>
+
+                <!-- Search Bar (Global Search) -->
+                <div class="flex-1 max-w-xs sm:max-w-md mx-2">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                        </span>
+                        <input type="text" id="headerSearchInput" onkeyup="handleGlobalSearch()" placeholder="Search catalog items or lab logs..." 
+                            class="w-full pl-9 pr-8 py-1.5 bg-slate-700/60 dark:bg-slate-800 text-sm text-white placeholder-slate-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-slate-700 transition">
+                        <button id="clearSearchBtn" onclick="clearGlobalSearch()" class="hidden absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-xmark text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Navigation & Mode Controls -->
+                <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+                    <!-- ComLab Network Guide Button -->
+                    <button onclick="openModal('networkGuideModal')" class="flex items-center space-x-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded-lg shadow transition" title="Host across all ComLab PCs">
+                        <i class="fa-solid fa-network-wired"></i>
+                        <span class="hidden md:inline">ComLab Multi-PC Guide</span>
+                    </button>
+
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-lg transition" title="Toggle Light/Dark Theme">
+                        <i id="themeIcon" class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <!-- Grid Layout matching Wireframe: 2 Columns on Desktop -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- LEFT COLUMN (2/3 width on desktop): Catalog + Computer Lab Log -->
+            <div class="lg:col-span-7 xl:col-span-7 flex flex-col gap-6">
+
+                <!-- SECTION 1: OUR CATALOG (Public View) -->
+                <section class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col">
+                    <div class="bg-slate-50 dark:bg-slate-800/80 px-5 py-3.5 border-b border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-boxes-stacked text-blue-600 dark:text-blue-400"></i>
+                            <h2 class="font-bold text-slate-800 dark:text-slate-100 text-base uppercase tracking-wide">
+                                OUR CATALOG <span class="text-xs font-normal text-slate-500 dark:text-slate-400 lowercase">(Public View - Check Availability)</span>
+                            </h2>
+                        </div>
+                        
+                        <!-- Filter Chips & Staff Mode Toggle -->
+                        <div class="flex items-center space-x-2">
+                            <button onclick="toggleAdminEditMode()" id="adminToggleBtn" class="px-2.5 py-1 text-xs rounded-md bg-amber-500 hover:bg-amber-600 text-white font-semibold shadow-sm transition flex items-center gap-1" title="Toggle inventory availability as staff">
+                                <i class="fa-solid fa-sliders"></i>
+                                <span>Staff Status Toggle</span>
+                            </button>
+                            <div class="flex items-center space-x-1 text-xs">
+                                <button onclick="filterCatalog('all')" id="btn-cat-all" class="cat-filter-btn px-2.5 py-1 rounded-md bg-blue-600 text-white font-medium shadow-sm">All</button>
+                                <button onclick="filterCatalog('av')" id="btn-cat-av" class="cat-filter-btn px-2.5 py-1 rounded-md bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-300">A/V Gear</button>
+                                <button onclick="filterCatalog('classroom')" id="btn-cat-classroom" class="cat-filter-btn px-2.5 py-1 rounded-md bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-300">Classroom</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Staff Status Control Notification (hidden by default) -->
+                    <div id="adminModeBanner" class="hidden bg-amber-50 dark:bg-amber-950/60 border-b border-amber-200 dark:border-amber-800 px-5 py-2 text-xs text-amber-800 dark:text-amber-200 flex items-center justify-between">
+                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-amber-600"></i> <strong>Staff Mode Active:</strong> Click any badge below to switch equipment status between Available and Unavailable.</span>
+                        <button onclick="toggleAdminEditMode()" class="underline font-bold">Done</button>
+                    </div>
+
+                    <div class="p-5 flex-1 space-y-5">
+                        
+                        <!-- Audio/Visual Gear Category -->
+                        <div id="category-av" class="catalog-category">
+                            <div class="flex items-center justify-between mb-3 pb-1 border-b border-slate-100 dark:border-slate-700/60">
+                                <h3 class="text-sm font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-2">
+                                    <i class="fa-solid fa-video text-slate-400"></i> Audio/Visual Gear
+                                </h3>
+                                <span class="text-xs text-slate-400 italic">(Check current status with Supply Officer)</span>
+                            </div>
+
+                            <ul class="space-y-2.5 text-sm" id="avCatalogList">
+                                <!-- Projectors -->
+                                <li class="catalog-item flex items-center justify-between p-2.5 rounded-lg bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700 hover:border-slate-300 transition" data-id="projectors" data-name="projectors (x2) audio visual gear">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-8 h-8 rounded-md bg-slate-200 dark:bg-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-200">
+                                            <i class="fa-solid fa-projector text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-medium text-slate-800 dark:text-slate-200">Projectors (x2)</span>
+                                            <p class="text-xs text-slate-500 dark:text-slate-400">HDMI / VGA Portable Units</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="toggleItemStatus('projectors')" id="badge-projectors" class="status-badge cursor-pointer inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 transition hover:scale-105">
+                                            <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500"></span> STATUS AVAILABLE
+                                        </button>
+                                        <button onclick="quickReserve('Projectors (x2)')" id="action-projectors" class="text-xs bg-slate-200 hover:bg-blue-600 hover:text-white dark:bg-slate-600 dark:hover:bg-blue-600 text-slate-700 dark:text-slate-200 px-2 py-1 rounded transition" title="Reserve Item">
+                                            Request
+                                        </button>
+                                    </div>
+                                </li>
+
+                                <!-- Extension Cords -->
+                                <li class="catalog-item flex items-center justify-between p-2.5 rounded-lg bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700 hover:border-slate-300 transition" data-id="extcords" data-name="extension cords (5m, x10) audio visual gear">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-8 h-8 rounded-md bg-slate-200 dark:bg-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-200">
+                                            <i class="fa-solid fa-plug text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-medium text-slate-800 dark:text-slate-200">Extension Cords (5m, x10)</span>
+                                            <p class="text-xs text-slate-500 dark:text-slate-400">Heavy duty multi-outlet extension line</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="toggleItemStatus('extcords')" id="badge-extcords" class="status-badge cursor-pointer inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 transition hover:scale-105">
+                                            <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500"></span> STATUS AVAILABLE
+                                        </button>
+                                        <button onclick="quickReserve('Extension Cords (5m, x10)')" id="action-extcords" class="text-xs bg-slate-200 hover:bg-blue-600 hover:text-white dark:bg-slate-600 dark:hover:bg-blue-600 text-slate-700 dark:text-slate-200 px-2 py-1 rounded transition" title="Reserve Item">
+                                            Request
+                                        </button>
+                                    </div>
+                                </li>
+
+                                <!-- Projector White Screens -->
+                                <li class="catalog-item flex items-center justify-between p-2.5 rounded-lg bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700 hover:border-slate-300 transition" data-id="screens" data-name="projector white screens (x3) audio visual gear">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-8 h-8 rounded-md bg-slate-200 dark:bg-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-200">
+                                            <i class="fa-solid fa-chalkboard text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-medium text-slate-800 dark:text-slate-200">Projector White Screens (x3)</span>
+                                            <p class="text-xs text-slate-500 dark:text-slate-400">Tripod roll-up screens</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="toggleItemStatus('screens')" id="badge-screens" class="status-badge cursor-pointer inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 transition hover:scale-105">
+                                            <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500"></span> STATUS AVAILABLE
+                                        </button>
+                                        <button onclick="quickReserve('Projector White Screens (x3)')" id="action-screens" class="text-xs bg-slate-200 hover:bg-blue-600 hover:text-white dark:bg-slate-600 dark:hover:bg-blue-600 text-slate-700 dark:text-slate-200 px-2 py-1 rounded transition" title="Reserve Item">
+                                            Request
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Classroom Resources Category -->
+                        <div id="category-classroom" class="catalog-category">
+                            <div class="flex items-center justify-between mb-3 pb-1 border-b border-slate-100 dark:border-slate-700/60">
+                                <h3 class="text-sm font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-2">
+                                    <i class="fa-solid fa-chair text-slate-400"></i> Classroom Resources
+                                </h3>
+                                <span class="text-xs text-slate-400 italic">(Self-Service)</span>
+                            </div>
+
+                            <ul class="space-y-2.5 text-sm" id="classroomCatalogList">
+                                <!-- Stacking Chairs -->
+                                <li class="catalog-item flex items-center justify-between p-2.5 rounded-lg bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700 hover:border-slate-300 transition" data-id="chairs" data-name="stacking chairs (x50) classroom resources">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-8 h-8 rounded-md bg-slate-200 dark:bg-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-200">
+                                            <i class="fa-solid fa-couch text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-medium text-slate-800 dark:text-slate-200">Stacking Chairs (x50)</span>
+                                            <p class="text-xs text-slate-500 dark:text-slate-400">Plastic event seating batch</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="toggleItemStatus('chairs')" id="badge-chairs" class="status-badge cursor-pointer inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 transition hover:scale-105">
+                                            <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500"></span> STATUS AVAILABLE
+                                        </button>
+                                        <button onclick="quickReserve('Stacking Chairs (x50)')" id="action-chairs" class="text-xs bg-slate-200 hover:bg-blue-600 hover:text-white dark:bg-slate-600 dark:hover:bg-blue-600 text-slate-700 dark:text-slate-200 px-2 py-1 rounded transition" title="Reserve Item">
+                                            Request
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- No results placeholder -->
+                        <div id="noCatalogResults" class="hidden text-center py-6 text-slate-400 text-sm">
+                            <i class="fa-solid fa-magnifying-glass text-2xl mb-2 text-slate-300"></i>
+                            <p>No catalog items match your search.</p>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- SECTION 2: COMPUTER LAB LOG -->
+                <section class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col">
+                    <div class="bg-slate-50 dark:bg-slate-800/80 px-5 py-3.5 border-b border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-desktop text-blue-600 dark:text-blue-400"></i>
+                            <h2 class="font-bold text-slate-800 dark:text-slate-100 text-base uppercase tracking-wide">
+                                COMPUTER LAB LOG <span class="text-xs font-normal text-slate-500 dark:text-slate-400 lowercase">(ComLab Station Check-in)</span>
+                            </h2>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2 py-0.5 text-[11px] font-semibold rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                                <i class="fa-solid fa-check-circle mr-1"></i> Open Access
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="p-4">
+                        <!-- Lab Action bar -->
+                        <div class="flex items-center justify-between mb-3 text-xs">
+                            <span class="text-slate-500 dark:text-slate-400 font-medium">Real-time Computer Station Activity Log</span>
+                            <button onclick="openModal('addLabModal')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md font-semibold transition flex items-center space-x-1 shadow-sm">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                                <span>Log New Station Session</span>
+                            </button>
+                        </div>
+
+                        <!-- Table -->
+                        <div class="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
+                            <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                                <thead>
+                                    <tr class="bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 font-semibold border-b border-slate-200 dark:border-slate-700">
+                                        <th class="p-2.5">Learner Reference No. (LRN)</th>
+                                        <th class="p-2.5">Lab Station #</th>
+                                        <th class="p-2.5">Time-In</th>
+                                        <th class="p-2.5">Status</th>
+                                        <th class="p-2.5">Activity / Project</th>
+                                        <th class="p-2.5 text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="labLogTableBody" class="divide-y divide-slate-100 dark:divide-slate-700/50 text-slate-700 dark:text-slate-300">
+                                    <!-- Dynamic entries populated via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Empty State Notice when no entries exist -->
+                        <div id="emptyLogNotice" class="text-center py-8 text-slate-400 text-xs">
+                            <i class="fa-solid fa-desktop text-3xl mb-2 text-slate-300 dark:text-slate-600 block"></i>
+                            <p class="font-medium text-slate-600 dark:text-slate-400 text-sm">No active lab station sessions logged yet.</p>
+                            <p class="text-slate-400 mt-0.5">Click <strong class="text-blue-600 dark:text-blue-400 cursor-pointer underline" onclick="openModal('addLabModal')">"Log New Station Session"</strong> above to record your computer usage.</p>
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- RIGHT COLUMN (1/3 width on desktop): MAKE A REQUEST -->
+            <div class="lg:col-span-5 xl:col-span-5">
+                <section class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden sticky top-20">
+                    
+                    <div class="bg-slate-800 text-white px-5 py-3.5 border-b border-slate-700 flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-paper-plane text-blue-400"></i>
+                            <h2 class="font-bold text-base uppercase tracking-wide">MAKE A REQUEST</h2>
+                        </div>
+                        <span class="text-xs bg-emerald-600 text-white px-2 py-0.5 rounded font-medium">Open to All</span>
+                    </div>
+
+                    <div class="p-5">
+                        <div class="mb-4 pb-2 border-b border-slate-100 dark:border-slate-700">
+                            <h3 class="font-semibold text-slate-800 dark:text-slate-200 text-sm">Reservation & Support Form</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Fill out all fields below to request school equipment or resource access.</p>
+                        </div>
+
+                        <!-- Reservation Form -->
+                        <form id="requestForm" onsubmit="handleRequestSubmit(event)" class="space-y-3.5 text-sm">
+                            
+                            <!-- LRN (Learner Reference Number) -->
+                            <div>
+                                <label for="reqLrn" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    Learner Reference No. (LRN) <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="reqLrn" required maxlength="12" placeholder="e.g. 123456789012"
+                                    class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition font-mono">
+                                <p class="text-[11px] text-slate-400 mt-0.5">12-digit Learner Reference Number</p>
+                            </div>
+
+                            <!-- Full Name -->
+                            <div>
+                                <label for="reqFullName" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    Full Name <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="reqFullName" required placeholder="e.g. Juan Dela Cruz"
+                                    class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                            </div>
+
+                            <!-- Item Name -->
+                            <div>
+                                <label for="reqItemName" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    Item Name <span class="text-red-500">*</span>
+                                </label>
+                                <select id="reqItemName" required
+                                    class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                                    <option value="" disabled selected>-- Select Equipment or Station --</option>
+                                    <optgroup label="Audio/Visual Gear">
+                                        <option value="Projectors (x2)" id="opt-projectors">Projectors (x2)</option>
+                                        <option value="Extension Cords (5m, x10)" id="opt-extcords">Extension Cords (5m, x10)</option>
+                                        <option value="Projector White Screens (x3)" id="opt-screens">Projector White Screens (x3)</option>
+                                    </optgroup>
+                                    <optgroup label="Classroom Resources">
+                                        <option value="Stacking Chairs (x50)" id="opt-chairs">Stacking Chairs (x50)</option>
+                                    </optgroup>
+                                    <optgroup label="Computer Lab Stations">
+                                        <option value="Computer Lab PC Station">Computer Lab PC Station</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <!-- Pick-Up Date & Time Grid -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label for="reqPickupDate" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                        Pick-Up Date <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="date" id="reqPickupDate" required
+                                        class="w-full px-2.5 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                                </div>
+                                <div>
+                                    <label for="reqPickupTime" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                        Pick-Up Time <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="time" id="reqPickupTime" required
+                                        class="w-full px-2.5 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                                </div>
+                            </div>
+
+                            <!-- Return Date & Time Grid -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label for="reqReturnDate" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                        Return Date <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="date" id="reqReturnDate" required
+                                        class="w-full px-2.5 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                                </div>
+                                <div>
+                                    <label for="reqReturnTime" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                        Return Time <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="time" id="reqReturnTime" required
+                                        class="w-full px-2.5 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                                </div>
+                            </div>
+
+                            <!-- Form Error Banner -->
+                            <div id="formError" class="hidden p-2.5 bg-red-100 dark:bg-red-950/80 border border-red-300 dark:border-red-800 text-red-800 dark:text-red-200 text-xs rounded-lg flex items-center space-x-2">
+                                <i class="fa-solid fa-circle-exclamation text-red-500 shrink-0"></i>
+                                <span id="formErrorMsg">Please check form values.</span>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" 
+                                class="w-full mt-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg transform active:scale-[0.99] transition duration-150 flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-paper-plane text-sm"></i>
+                                <span>Submit Request</span>
+                            </button>
+
+                        </form>
+
+                        <!-- Google Forms Sub-note -->
+                        <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700 text-center">
+                            <p class="text-xs text-slate-500 dark:text-slate-400 italic font-medium">
+                                Integrated Form Concept
+                            </p>
+                            <p class="text-[11px] text-slate-400 dark:text-slate-500">
+                                Use this form for reservations and lab logins.
+                            </p>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-800 dark:bg-slate-950 text-slate-400 border-t border-slate-700 mt-12 py-6 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            
+            <!-- Quick Links -->
+            <div class="flex items-center space-x-4">
+                <span class="font-semibold text-slate-300">Quick Links:</span>
+                <button onclick="openModal('policiesModal')" class="hover:text-white transition underline-offset-2 hover:underline">Policies</button>
+                <span>|</span>
+                <button onclick="openModal('faqModal')" class="hover:text-white transition underline-offset-2 hover:underline">FAQ</button>
+                <span>|</span>
+                <button onclick="openModal('contactModal')" class="hover:text-white transition underline-offset-2 hover:underline">Contact</button>
+            </div>
+
+            <!-- Credits -->
+            <div class="text-slate-400 font-medium">
+                Powered by Grade 12 ICT | © 2026
+            </div>
+
+        </div>
+    </footer>
+
+
+    <!-- MODALS & DIALOGS -->
+
+    <!-- 1. ADD LAB STATION LOG MODAL -->
+    <div id="addLabModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 max-w-md w-full overflow-hidden">
+            <div class="bg-slate-800 px-5 py-4 text-white flex justify-between items-center">
+                <h3 class="font-bold text-base flex items-center gap-2">
+                    <i class="fa-solid fa-desktop text-blue-400"></i> ComLab Station Check-In
+                </h3>
+                <button onclick="closeModal('addLabModal')" class="text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form onsubmit="handleAddLabLog(event)" class="p-5 space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                        Learner Reference No. (LRN) <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="labLrn" required maxlength="12" placeholder="e.g. 123456789012" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 text-sm font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                        Lab Station # <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="labStationNum" required placeholder="e.g. PC-01, PC-12" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 text-sm uppercase">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                        Activity / Purpose <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="labActivity" required placeholder="e.g. Empowerment Tech Lab Exercise, Research" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 text-sm">
+                </div>
+                <div class="pt-2 flex justify-end space-x-2">
+                    <button type="button" onclick="closeModal('addLabModal')" class="px-4 py-2 rounded-lg border border-slate-300 text-slate-700 dark:text-slate-300 text-xs font-semibold">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow">Record Check-In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. POLICIES MODAL -->
+    <div id="policiesModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 max-w-lg w-full overflow-hidden">
+            <div class="bg-slate-800 px-5 py-4 text-white flex justify-between items-center">
+                <h3 class="font-bold text-base flex items-center gap-2">
+                    <i class="fa-solid fa-file-contract text-blue-400"></i> Equipment & Lab Policies
+                </h3>
+                <button onclick="closeModal('policiesModal')" class="text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 text-xs text-slate-600 dark:text-slate-300 space-y-3 max-h-[60vh] overflow-y-auto">
+                <h4 class="font-bold text-slate-900 dark:text-slate-100 text-sm">1. Equipment Borrowing</h4>
+                <p>All students must present a valid LRN upon borrowing. Borrowed equipment must be returned on or before the agreed time slot.</p>
+                <h4 class="font-bold text-slate-900 dark:text-slate-100 text-sm">2. Computer Station Use</h4>
+                <p>Students must log their station in the Computer Lab Log upon sitting down and mark checkout when done.</p>
+                <h4 class="font-bold text-slate-900 dark:text-slate-100 text-sm">3. Care of Property</h4>
+                <p>Any technical malfunction or damage must be reported immediately to the computer laboratory in-charge.</p>
+            </div>
+            <div class="p-4 bg-slate-50 dark:bg-slate-700/50 text-right">
+                <button onclick="closeModal('policiesModal')" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-xs font-semibold">Understood</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. FAQ MODAL -->
+    <div id="faqModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 max-w-lg w-full overflow-hidden">
+            <div class="bg-slate-800 px-5 py-4 text-white flex justify-between items-center">
+                <h3 class="font-bold text-base flex items-center gap-2">
+                    <i class="fa-solid fa-circle-question text-blue-400"></i> Frequently Asked Questions
+                </h3>
+                <button onclick="closeModal('faqModal')" class="text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 text-xs text-slate-600 dark:text-slate-300 space-y-3 max-h-[60vh] overflow-y-auto">
+                <div>
+                    <h4 class="font-bold text-slate-800 dark:text-slate-100">Q: Who can request equipment?</h4>
+                    <p>A: Anyone with a valid 12-digit LRN can submit a request form.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 dark:text-slate-100">Q: How do I check out from a lab station?</h4>
+                    <p>A: Find your session row in the Computer Lab Log and click the "Checkout" link.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 dark:text-slate-100">Q: Do changes show on other computers?</h4>
+                    <p>A: Yes! Changes automatically sync across open browser windows in the laboratory network.</p>
+                </div>
+            </div>
+            <div class="p-4 bg-slate-50 dark:bg-slate-700/50 text-right">
+                <button onclick="closeModal('faqModal')" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-xs font-semibold">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. CONTACT MODAL -->
+    <div id="contactModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 max-w-md w-full overflow-hidden">
+            <div class="bg-slate-800 px-5 py-4 text-white flex justify-between items-center">
+                <h3 class="font-bold text-base flex items-center gap-2">
+                    <i class="fa-solid fa-address-book text-blue-400"></i> Contact Support
+                </h3>
+                <button onclick="closeModal('contactModal')" class="text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 text-xs text-slate-600 dark:text-slate-300 space-y-3">
+                <div class="p-3 bg-blue-50 dark:bg-blue-950/60 text-blue-900 dark:text-blue-200 rounded-lg">
+                    <p class="font-semibold"><i class="fa-solid fa-building-columns mr-1"></i> Computer Lab & Supply Office</p>
+                    <p class="mt-1">Grade 12 ICT Empowerment Technologies Project</p>
+                </div>
+                <p><i class="fa-solid fa-envelope mr-2 text-slate-400"></i> <strong>Email:</strong> support@school-ict.edu.ph</p>
+                <p><i class="fa-solid fa-clock mr-2 text-slate-400"></i> <strong>Lab Hours:</strong> Monday – Friday (7:30 AM – 5:00 PM)</p>
+            </div>
+            <div class="p-4 bg-slate-50 dark:bg-slate-700/50 text-right">
+                <button onclick="closeModal('contactModal')" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-xs font-semibold">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. MULTI-PC COMLAB NETWORK HOSTING GUIDE MODAL -->
+    <div id="networkGuideModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 max-w-2xl w-full overflow-hidden">
+            <div class="bg-indigo-900 px-5 py-4 text-white flex justify-between items-center">
+                <h3 class="font-bold text-base flex items-center gap-2">
+                    <i class="fa-solid fa-network-wired text-indigo-400"></i> How to Access across All ComLab Computers
+                </h3>
+                <button onclick="closeModal('networkGuideModal')" class="text-slate-300 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 text-sm text-slate-700 dark:text-slate-300 space-y-4 max-h-[75vh] overflow-y-auto">
+                <p class="text-xs bg-indigo-50 dark:bg-indigo-950/80 text-indigo-900 dark:text-indigo-200 p-3 rounded-lg border border-indigo-200 dark:border-indigo-800">
+                    <i class="fa-solid fa-circle-info mr-1"></i> This website is designed to run across all computers in your school computer laboratory connected to the same network.
+                </p>
+
+                <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 space-y-2">
+                    <h4 class="font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                        <span class="w-5 h-5 bg-indigo-600 text-white rounded-full text-xs flex items-center justify-center">1</span>
+                        Local Network Server Setup (No Internet Required)
+                    </h4>
+                    <ol class="list-decimal list-inside text-xs space-y-1.5 text-slate-600 dark:text-slate-400 pl-1">
+                        <li>Save this file as <code class="bg-slate-100 dark:bg-slate-700 px-1 py-0.5 rounded font-mono text-indigo-600 dark:text-indigo-300">index.html</code> on the host/teacher PC.</li>
+                        <li>Open Command Prompt (<code class="bg-slate-100 dark:bg-slate-700 px-1 py-0.5 rounded font-mono">cmd</code>) on the host PC and type <code class="bg-slate-100 dark:bg-slate-700 px-1 py-0.5 rounded font-mono text-emerald-600 dark:text-emerald-400">ipconfig</code> to find your IPv4 Address.</li>
+                        <li>Start a web server (e.g. VS Code Live Server or Python: <code class="bg-slate-100 dark:bg-slate-700 px-1 py-0.5 rounded font-mono">python -m http.server 8000</code>).</li>
+                        <li>On all other student PCs in the lab, open the browser and enter the host IP and port (e.g., <code class="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 px-1.5 py-0.5 rounded font-mono">http://192.168.1.15:8000</code>).</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="p-4 bg-slate-100 dark:bg-slate-700/60 text-right">
+                <button onclick="closeModal('networkGuideModal')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow transition">Got It</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 max-w-sm w-full bg-slate-900 text-white p-4 rounded-xl shadow-2xl border border-slate-700 flex items-start space-x-3">
+        <div class="text-emerald-400 text-xl shrink-0 mt-0.5">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div class="flex-1">
+            <h4 id="toastTitle" class="font-bold text-sm text-white">Notification</h4>
+            <p id="toastMessage" class="text-xs text-slate-300 mt-0.5">Message detail goes here.</p>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Item Availability State Store (All items default to AVAILABLE)
+        let equipmentStatus = {
+            projectors: 'AVAILABLE',
+            extcords: 'AVAILABLE',
+            screens: 'AVAILABLE',
+            chairs: 'AVAILABLE'
+        };
+
+        let labLogs = [];
+        let isAdminEditMode = false;
+
+        // Initialize and load persistent / cross-window states
+        window.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('reqPickupDate').value = today;
+            document.getElementById('reqReturnDate').value = today;
+
+            // Load equipment statuses from localStorage
+            const savedStatus = localStorage.getItem('comlab_equipment_status');
+            if (savedStatus) {
+                try { equipmentStatus = JSON.parse(savedStatus); } catch(e) {}
+            }
+
+            // Load Lab Logs from localStorage
+            const savedLogs = localStorage.getItem('comlab_lab_logs');
+            if (savedLogs) {
+                try { labLogs = JSON.parse(savedLogs); } catch(e) {}
+            }
+
+            renderEquipmentStatuses();
+            renderLabLogs();
+        });
+
+        // Listen for storage changes across tabs / browser windows
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'comlab_equipment_status' && event.newValue) {
+                equipmentStatus = JSON.parse(event.newValue);
+                renderEquipmentStatuses();
+            }
+            if (event.key === 'comlab_lab_logs' && event.newValue) {
+                labLogs = JSON.parse(event.newValue);
+                renderLabLogs();
+            }
+        });
+
+        // Toggle Admin Edit Mode
+        function toggleAdminEditMode() {
+            isAdminEditMode = !isAdminEditMode;
+            const banner = document.getElementById('adminModeBanner');
+            const toggleBtn = document.getElementById('adminToggleBtn');
+
+            if (isAdminEditMode) {
+                banner.classList.remove('hidden');
+                toggleBtn.classList.replace('bg-amber-500', 'bg-emerald-600');
+                toggleBtn.innerHTML = '<i class="fa-solid fa-check"></i> Exit Toggle Mode';
+                showToast('Staff Mode Active', 'Click any equipment badge to toggle status between Available and Unavailable.');
+            } else {
+                banner.classList.add('hidden');
+                toggleBtn.classList.replace('bg-emerald-600', 'bg-amber-500');
+                toggleBtn.innerHTML = '<i class="fa-solid fa-sliders"></i> Staff Status Toggle';
+            }
+        }
+
+        // Toggle Equipment Status
+        function toggleItemStatus(itemId) {
+            if (!isAdminEditMode) {
+                showToast('Status Info', 'Click "Staff Status Toggle" at the top right of the catalog to edit availability.');
+                return;
+            }
+
+            equipmentStatus[itemId] = equipmentStatus[itemId] === 'AVAILABLE' ? 'UNAVAILABLE' : 'AVAILABLE';
+            localStorage.setItem('comlab_equipment_status', JSON.stringify(equipmentStatus));
+            renderEquipmentStatuses();
+            showToast('Status Updated', `Item availability changed to ${equipmentStatus[itemId]}.`);
+        }
+
+        // Render Badges
+        function renderEquipmentStatuses() {
+            const itemMap = {
+                projectors: { name: 'Projectors (x2)', badgeId: 'badge-projectors', actionId: 'action-projectors', optId: 'opt-projectors' },
+                extcords: { name: 'Extension Cords (5m, x10)', badgeId: 'badge-extcords', actionId: 'action-extcords', optId: 'opt-extcords' },
+                screens: { name: 'Projector White Screens (x3)', badgeId: 'badge-screens', actionId: 'action-screens', optId: 'opt-screens' },
+                chairs: { name: 'Stacking Chairs (x50)', badgeId: 'badge-chairs', actionId: 'action-chairs', optId: 'opt-chairs' }
+            };
+
+            Object.keys(equipmentStatus).forEach(key => {
+                const status = equipmentStatus[key];
+                const config = itemMap[key];
+                const badge = document.getElementById(config.badgeId);
+                const actionBtn = document.getElementById(config.actionId);
+                const opt = document.getElementById(config.optId);
+
+                if (!badge || !actionBtn) return;
+
+                if (status === 'AVAILABLE') {
+                    badge.className = 'status-badge cursor-pointer inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 transition hover:scale-105';
+                    badge.innerHTML = '<span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500"></span> STATUS AVAILABLE';
+                    
+                    actionBtn.disabled = false;
+                    actionBtn.className = 'text-xs bg-slate-200 hover:bg-blue-600 hover:text-white dark:bg-slate-600 dark:hover:bg-blue-600 text-slate-700 dark:text-slate-200 px-2 py-1 rounded transition';
+                    actionBtn.innerText = 'Request';
+
+                    if (opt) {
+                        opt.disabled = false;
+                        opt.innerText = `${config.name} - Available`;
+                    }
+                } else {
+                    badge.className = 'status-badge cursor-pointer inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300 border border-red-300 dark:border-red-800 transition hover:scale-105';
+                    badge.innerHTML = '<span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-red-500"></span> STATUS UNAVAILABLE';
+
+                    actionBtn.disabled = true;
+                    actionBtn.className = 'text-xs bg-slate-100 dark:bg-slate-800 text-slate-400 px-2 py-1 rounded cursor-not-allowed';
+                    actionBtn.innerText = 'In Use';
+
+                    if (opt) {
+                        opt.disabled = true;
+                        opt.innerText = `${config.name} - Unavailable`;
+                    }
+                }
+            });
+        }
+
+        // Render Computer Lab Logs
+        function renderLabLogs() {
+            const tbody = document.getElementById('labLogTableBody');
+            const emptyNotice = document.getElementById('emptyLogNotice');
+
+            tbody.innerHTML = '';
+
+            if (labLogs.length === 0) {
+                emptyNotice.classList.remove('hidden');
+                return;
+            }
+
+            emptyNotice.classList.add('hidden');
+
+            labLogs.forEach((log, index) => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-700/30 transition log-row';
+                tr.setAttribute('data-search', `${log.lrn.toLowerCase()} ${log.station.toLowerCase()} ${log.activity.toLowerCase()}`);
+
+                const isActive = log.status === 'Active';
+
+                tr.innerHTML = `
+                    <td class="p-2.5 font-medium text-slate-900 dark:text-slate-100 font-mono">${log.lrn}</td>
+                    <td class="p-2.5"><span class="font-mono bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded text-slate-800 dark:text-slate-200">${log.station}</span></td>
+                    <td class="p-2.5 text-slate-500 dark:text-slate-400">${log.timeIn}</td>
+                    <td class="p-2.5">
+                        ${isActive ? `
+                            <span class="inline-flex items-center text-emerald-700 dark:text-emerald-400 font-bold">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span> Time-In (Active)
+                            </span>
+                        ` : `
+                            <span class="inline-flex items-center text-slate-500 dark:text-slate-400 font-medium">
+                                <span class="w-2 h-2 rounded-full bg-slate-400 mr-1.5"></span> Checked-Out
+                            </span>
+                        `}
+                    </td>
+                    <td class="p-2.5 font-medium">${log.activity}</td>
+                    <td class="p-2.5 text-center">
+                        <button onclick="toggleLogEntryStatus(${index})" class="text-xs ${isActive ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'} hover:underline font-semibold">
+                            ${isActive ? 'Checkout' : 'Re-login'}
+                        </button>
+                    </td>
+                `;
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Toggle log entry checkout / re-login
+        function toggleLogEntryStatus(index) {
+            if (labLogs[index]) {
+                if (labLogs[index].status === 'Active') {
+                    labLogs[index].status = 'Checked-Out';
+                    showToast('Station Checked Out', `LRN ${labLogs[index].lrn} signed out.`);
+                } else {
+                    labLogs[index].status = 'Active';
+                    labLogs[index].timeIn = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    showToast('Station Session Active', `LRN ${labLogs[index].lrn} signed back in.`);
+                }
+                localStorage.setItem('comlab_lab_logs', JSON.stringify(labLogs));
+                renderLabLogs();
+            }
+        }
+
+        // Add New Lab Log Entry
+        function handleAddLabLog(e) {
+            e.preventDefault();
+            const lrn = document.getElementById('labLrn').value.trim();
+            const station = document.getElementById('labStationNum').value.trim();
+            const activity = document.getElementById('labActivity').value.trim();
+
+            if (!lrn || !station || !activity) return;
+
+            const newEntry = {
+                lrn: lrn,
+                station: station,
+                activity: activity,
+                timeIn: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                status: 'Active'
+            };
+
+            labLogs.unshift(newEntry);
+            localStorage.setItem('comlab_lab_logs', JSON.stringify(labLogs));
+            renderLabLogs();
+
+            closeModal('addLabModal');
+            showToast('Station Session Recorded', `LRN ${lrn} checked in to ${station}.`);
+
+            // Reset inputs
+            document.getElementById('labLrn').value = '';
+            document.getElementById('labStationNum').value = '';
+            document.getElementById('labActivity').value = '';
+        }
+
+        // Dark / Light Mode Toggle
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'fa-solid fa-moon';
+            } else {
+                html.classList.add('dark');
+                icon.className = 'fa-solid fa-sun text-amber-400';
+            }
+        }
+
+        // Global Header Search Functionality
+        function handleGlobalSearch() {
+            const query = document.getElementById('headerSearchInput').value.toLowerCase().trim();
+            const clearBtn = document.getElementById('clearSearchBtn');
+            
+            if (query.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+
+            // Filter Catalog Items
+            const items = document.querySelectorAll('.catalog-item');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const searchData = item.getAttribute('data-name').toLowerCase();
+                if (searchData.includes(query)) {
+                    item.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            const noResults = document.getElementById('noCatalogResults');
+            if (visibleCount === 0 && query !== '') {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            // Filter Lab Log Rows
+            const logRows = document.querySelectorAll('.log-row');
+            logRows.forEach(row => {
+                const rowData = row.getAttribute('data-search').toLowerCase();
+                if (rowData.includes(query)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function clearGlobalSearch() {
+            document.getElementById('headerSearchInput').value = '';
+            handleGlobalSearch();
+        }
+
+        // Filter Catalog by Category
+        function filterCatalog(category) {
+            const buttons = document.querySelectorAll('.cat-filter-btn');
+            buttons.forEach(btn => {
+                btn.className = 'cat-filter-btn px-2.5 py-1 rounded-md bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-300';
+            });
+
+            const activeBtn = document.getElementById(`btn-cat-${category}`);
+            if (activeBtn) {
+                activeBtn.className = 'cat-filter-btn px-2.5 py-1 rounded-md bg-blue-600 text-white font-medium shadow-sm';
+            }
+
+            const avSec = document.getElementById('category-av');
+            const classSec = document.getElementById('category-classroom');
+
+            if (category === 'all') {
+                avSec.classList.remove('hidden');
+                classSec.classList.remove('hidden');
+            } else if (category === 'av') {
+                avSec.classList.remove('hidden');
+                classSec.classList.add('hidden');
+            } else if (category === 'classroom') {
+                avSec.classList.add('hidden');
+                classSec.classList.remove('hidden');
+            }
+        }
+
+        // Quick Reserve helper from catalog list
+        function quickReserve(itemName) {
+            const selectEl = document.getElementById('reqItemName');
+            selectEl.value = itemName;
+            selectEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            selectEl.classList.add('ring-2', 'ring-blue-500');
+            setTimeout(() => {
+                selectEl.classList.remove('ring-2', 'ring-blue-500');
+            }, 1500);
+        }
+
+        // Handle Request Submission
+        function handleRequestSubmit(e) {
+            e.preventDefault();
+            
+            const lrn = document.getElementById('reqLrn').value.trim();
+            const fullName = document.getElementById('reqFullName').value.trim();
+            const itemName = document.getElementById('reqItemName').value;
+            const pickupDate = document.getElementById('reqPickupDate').value;
+            const pickupTime = document.getElementById('reqPickupTime').value;
+            const returnDate = document.getElementById('reqReturnDate').value;
+            const returnTime = document.getElementById('reqReturnTime').value;
+            const errorBox = document.getElementById('formError');
+            const errorMsg = document.getElementById('formErrorMsg');
+
+            errorBox.classList.add('hidden');
+
+            // Date validation
+            if (new Date(returnDate + 'T' + returnTime) < new Date(pickupDate + 'T' + pickupTime)) {
+                errorMsg.innerText = "Return date and time cannot be earlier than pick-up date and time.";
+                errorBox.classList.remove('hidden');
+                return;
+            }
+
+            // Success feedback
+            showToast('Request Submitted!', `Reservation for "${itemName}" submitted under LRN ${lrn}.`);
+
+            // Reset Form
+            document.getElementById('requestForm').reset();
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('reqPickupDate').value = today;
+            document.getElementById('reqReturnDate').value = today;
+        }
+
+        // Modal Helpers
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        // Toast Notification Function
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').innerText = title;
+            document.getElementById('toastMessage').innerText = message;
+
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
